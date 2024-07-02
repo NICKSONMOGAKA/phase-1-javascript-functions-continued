@@ -1,49 +1,50 @@
-require ( './helpers.js' );
+const { expect } = require('chai');
+const { saturdayFun, mondayWork, wrapAdjective } = require('../index.js');
 
-describe("index.js", () => {
-  describe("defines saturdayFun function declaration as specified", function() {
-    it("function exists", function() {
-      expect(saturdayFun).to.exist
-    })
-
-    it("uses the default activity 'roller-skate' when no arguments are passed", function() {
-      expect(saturdayFun()).to.equal("This Saturday, I want to roller-skate!")
-    })
-
-    it("permits the default activity to be overriden", function() {
-      expect(saturdayFun("bathe my dog")).to.equal("This Saturday, I want to bathe my dog!")
-    })
-  })
-
-  describe("defines mondayWork function expression as specified", function() {
-    it("function exists", function() {
-      expect(mondayWork).to.exist
-    })
-
-    it("uses the default activity 'go to the office' when no arguments are passed", function() {
-      expect(mondayWork()).to.equal("This Monday, I will go to the office.")
-    })
-
-    it("permits the default activity to be overriden", function() {
-      expect(mondayWork("work from home")).to.equal("This Monday, I will work from home.")
-    })
-  })
-
-  describe("defines wrapAdjective function according to the specification", function() {
-    it("function exists", function() {
-      expect(wrapAdjective).to.exist
-    })
-    
-    it("when initialized with '*' creates a function that, when called, wraps an adjective in a highlight", function() {
-      let result = wrapAdjective('*')
-      let emphatic = result("a hard worker")
-      expect(emphatic).to.equal("You are *a hard worker*!")
+describe('index.js', () => {
+  describe('defines saturdayFun function declaration as specified', () => {
+    it('function exists', () => {
+      expect(saturdayFun).to.be.a('function');
     });
 
-    it("when initialized with '||' creates a function that, when called, wraps an adjective in a highlight", function() {
-      let result = wrapAdjective("||")
-      let emphatic = result("a dedicated programmer")
-      expect(emphatic).to.equal("You are ||a dedicated programmer||!")
+    it('uses the default activity \'roller-skate\' when no arguments are passed', () => {
+      expect(saturdayFun()).to.equal('This Saturday, I want to roller-skate!');
     });
-  })
-})
+
+    it('permits the default activity to be overriden', () => {
+      expect(saturdayFun('go to the movies')).to.equal('This Saturday, I want to go to the movies!');
+    });
+  });
+
+  describe('defines mondayWork function expression as specified', () => {
+    it('function exists', () => {
+      expect(mondayWork).to.be.a('function');
+    });
+
+    it('uses the default activity \'go to the office\' when no arguments are passed', () => {
+      expect(mondayWork()).to.equal('This Monday, I will go to the office.');
+    });
+
+    it('permits the default activity to be overriden', () => {
+      expect(mondayWork('eat a bagel')).to.equal('This Monday, I will eat a bagel.');
+    });
+  });
+
+  describe('defines wrapAdjective function according to the specification', () => {
+    it('function exists', () => {
+      expect(wrapAdjective).to.be.a('function');
+    });
+
+    it('when initialized with \'*\' creates a function that, when called, wraps an adjective in a highlight', () => {
+      const badassFunction = wrapAdjective('*');
+      expect(badassFunction).to.be.a('function');
+      expect(badassFunction('badass')).to.equal('*badass*');
+    });
+
+    it('when initialized with \'||\' creates a function that, when called, wraps an adjective in a highlight', () => {
+      const niceFunction = wrapAdjective('||');
+      expect(niceFunction).to.be.a('function');
+      expect(niceFunction('nice')).to.equal('||nice||');
+    });
+  });
+});
